@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletHit : MonoBehaviour
+public class BulletHitEnemy : MonoBehaviour
 {
     [SerializeField]
     public int BulletDamage;
@@ -26,6 +26,11 @@ public class BulletHit : MonoBehaviour
     public float range = 1000f;
 
     public Vector3 BulletDir;
+    public float BulletOffX;
+    public float BulletOffY;
+    public float BulletOffZ;
+    public float BulletTravelDistance;
+    public float BulletEqualizer;
     public Vector3 BulletDirDifference;
     public Vector3 BulletStartPos;
     public Vector3 BulletSecondPos;
@@ -35,15 +40,34 @@ public class BulletHit : MonoBehaviour
     public GameObject GunBack;
     public GameObject GunFront;
 
+    public GameObject BulletOrigin;
+    [SerializeField]
+    public GameObject DebugSphere;
+
     public void Start()
     {
+        //Debug.Log(ThisBullet.transform.position);
         transform.parent = null;
 
-        GunBack = FindObjectOfType<GunDirection>().GetComponent<GunDirection>().GunBack;
-        GunFront = FindObjectOfType<GunDirection>().GetComponent<GunDirection>().GunFront;
+        GunBack = BulletOrigin;      //FindObjectOfType<GunDirection>().GetComponent<GunDirection>().GunBack;    Used to be this, not sure why, but it was probably referencing the gun way of to the side?
+        GunFront = FindObjectOfType<PlayerFinder>().GetComponent<PlayerFinder>().PlayerObj;
         BulletDir = GunFront.transform.position - GunBack.transform.position;
+        BulletOffX = Random.Range(-1f, 1f);
+        BulletOffY = Random.Range(-1f, 1f);
+        BulletOffZ = Random.Range(-1f, 1f);
+        BulletTravelDistance = Vector3.Distance(GunBack.transform.position, GunFront.transform.position);
+        //15m is good for the 2x2
+        BulletEqualizer = BulletTravelDistance / 15;  //This should be modifiable for difficulty
+        BulletDir.x += BulletEqualizer * BulletOffX;
+        BulletDir.y += (BulletEqualizer * BulletOffY) +1;
+        //BulletDir.y += 1.2f;
+        BulletDir.z += BulletEqualizer * BulletOffZ;
 
-        this.GetComponent<Rigidbody>().velocity = BulletDir * 300;
+        //Debug.Log(BulletTravelDistance);
+        //GameObject DebugSphere1 = Instantiate(DebugSphere, BulletOrigin.transform);
+        //GameObject DebugSphere2 = Instantiate(DebugSphere, GunFront.transform);
+        ThisBullet.transform.position = BulletOrigin.transform.position;
+        ThisBullet.GetComponent<Rigidbody>().velocity = BulletDir * 3;
     }
 
     /*public void Update()
@@ -79,22 +103,32 @@ public class BulletHit : MonoBehaviour
 
     }
     //*/
-
-    public void OutputMessage()
+    public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("boop");
+        if (other.gameObject.tag == "Player")
+        {
+            GameObject NewBlood = Instantiate(BloodObj, this.transform.position, this.transform.rotation);
+            Destroy(other);
+        }
     }
-
-
 
     public void OnCollisionEnter(Collision other)
     {
-        Debug.Log("collision with " + other.gameObject.tag + " named " + other.transform.name);
+        //Debug.Log("collision with " + other.gameObject.tag + " named " + other.transform.name);
         if (other.gameObject.tag == "Gun")
         {
             GameObject NewSparks = Instantiate(SparksObj, this.transform.position, this.transform.rotation);
         }
-        else if (other.gameObject.tag == "Enemy") //Checks collision object to see if it's an enemy
+        else if (other.gameObject.tag == "Player")
+        {
+            GameObject NewBlood = Instantiate(BloodObj, this.transform.position, this.transform.rotation);
+        }
+        else
+        {
+            GameObject NewDust = Instantiate(DustObj, this.transform.position, this.transform.rotation);
+        }
+        Destroy(ThisBullet);
+        /*else if (other.gameObject.tag == "Enemy") //Checks collision object to see if it's an enemy
         {
             GameObject NewBloodSpurt = Instantiate(BloodSpurtObj, this.transform.position, this.transform.rotation);
 
@@ -167,6 +201,6 @@ public class BulletHit : MonoBehaviour
             Debug.Log("2");
             Destroy(other.gameObject);
         }
-        //Destroy(this);
-    }*/
+        //Destroy(this);*/
+    }
 }

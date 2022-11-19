@@ -9,6 +9,8 @@ using HurricaneVR.Framework.Core.Utils;
 using HurricaneVR.Framework.Shared;
 
 
+//I believe this script is essentially useless now, all the work has been done in BulletHit.cs
+
 public class BloodSquirt : MonoBehaviour
 {
     [SerializeField]
@@ -61,6 +63,8 @@ public class BloodSquirt : MonoBehaviour
             }*/
 
 
+
+            /*
             Debug.Log(hitColliders[0].transform.tag);
             if (hitColliders[0] != null && hitColliders[0].transform.tag == "Enemy")
             {
@@ -126,7 +130,7 @@ public class BloodSquirt : MonoBehaviour
             else
             {
                 GameObject NewDust = Instantiate(DustObj, this.transform.position, this.transform.rotation);
-            }
+            }*/
             
         }
     }

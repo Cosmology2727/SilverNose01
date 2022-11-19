@@ -237,6 +237,7 @@ namespace HurricaneVR.Framework.Weapons.Guns
                 CockingHandle.ChamberRound.AddListener(OnCockingHandleChambered);
             }
 
+            //Took this out to see if it would stop messing stuff up
             SetupPooledBullets();
 
             _animatableGunParts = GetComponentsInChildren<HVRGunPart>();
@@ -255,13 +256,14 @@ namespace HurricaneVR.Framework.Weapons.Guns
 
 
 
-        protected virtual void SetupPooledBullets()
+        //Took this out to see if it would stop causing no many issues messing stuff up
+                protected virtual void SetupPooledBullets()
         {
             for (int i = 0; i < MaxPooledBullets; i++)
             {
                 _objects.Add(new HVRBulletTracker());
 
-                if (BulletPrefab)
+                if (BulletPrefab)  //There was a ( at the beginning of this, probably my fault, but just making sure
                 {
                     _objects[i].Bullet = Instantiate(BulletPrefab);
                 }
@@ -648,8 +650,8 @@ namespace HurricaneVR.Framework.Weapons.Guns
 
                         //Debug.Log(hit.transform.tag);
 
-                        GameObject NewBloodSpurt = Instantiate(BloodSpurtObj, hit.point, this.transform.rotation) as GameObject;        //this worked, trying something else
-                        Debug.Break();
+                        //GameObject NewBloodSpurt = Instantiate(BloodSpurtObj, hit.point, this.transform.rotation) as GameObject;        //this worked, trying something else
+                        //Debug.Break();
                         //NewBloodSpurt.GetComponent<BloodSquirt>().MakeBloodSquirt(hit.transform.tag);                 //doesn't work, but it should
 
 
@@ -1025,7 +1027,7 @@ namespace HurricaneVR.Framework.Weapons.Guns
         {
             var bullet = GetFreeBullet();
             bullet.Reset();
-            //bullet.Bullet = Instantiate(BulletPrefab);
+            bullet.Bullet = Instantiate(BulletPrefab);
             //bullet.Bullet.hideFlags = HideFlags.HideInHierarchy;
             bullet.Range = BulletRange;
             bullet.Direction = direction;

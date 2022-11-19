@@ -15,7 +15,7 @@ namespace HurricaneVR.Framework.Weapons.Guns
             ForceRelease();
             if (MagazineSocket && IsValid(grabbable) && grabbable.HandGrabbers.Count > 0)
             {
-                Debug.Log($"drop");
+                ///Debug.Log($"drop");
                 MagazineSocket.ForceRelease();
             }
         }

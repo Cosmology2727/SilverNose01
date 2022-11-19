@@ -19,6 +19,9 @@ public class EnemyStats : MonoBehaviour
     [SerializeField]
     public int EnemyArmor = 0;
 
+    [SerializeField]
+    public int EnemyDamage = 10;
+
     public int ToDelete = 800;
 
     [System.NonSerialized] public bool HasGrenade = false;

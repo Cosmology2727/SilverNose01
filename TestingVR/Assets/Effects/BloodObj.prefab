@@ -14597,6 +14597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 688988111984372078}
   - component: {fileID: 1956190747796650731}
+  - component: {fileID: 7399224537075935368}
   m_Layer: 0
   m_Name: BloodObj
   m_TagString: Untagged
@@ -14628,7 +14629,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2317079305334997260}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d747bcd8df8afa14aa597d45bd2bc6e0, type: 3}
   m_Name: 
@@ -14641,6 +14642,19 @@ MonoBehaviour:
   TempDamage: 0
   FindingHit: 0
   HitNumber: -1
+--- !u!114 &7399224537075935368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2317079305334997260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30b18ddd672d5c447a548e89752089ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeToDestroy: 300
 --- !u!1 &3130698336800996872
 GameObject:
   m_ObjectHideFlags: 0
@@ -14658,7 +14672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3035973195580838802
 Transform:
   m_ObjectHideFlags: 0

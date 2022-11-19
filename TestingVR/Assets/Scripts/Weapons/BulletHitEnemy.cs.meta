@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c41f9fc504bf15449a05979496371359
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - BloodSpurtObj: {fileID: 2317079305334997260, guid: c9c75e03634c7934f9dc8f9fa80dee31, type: 3}
+  - BloodObj: {fileID: 2317079305334997260, guid: 32fde113f0cc88b489723a84b4e7d9b0, type: 3}
+  - DustObj: {fileID: 2317079305334997260, guid: 54c8080ed0a85b140820bbbc0e34b961, type: 3}
+  - SparksObj: {fileID: 2317079305334997260, guid: 20ffeee698e2bcd46a40e957f6429e20, type: 3}
+  - ThisBullet: {instanceID: 0}
+  - GunBack: {instanceID: 0}
+  - GunFront: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

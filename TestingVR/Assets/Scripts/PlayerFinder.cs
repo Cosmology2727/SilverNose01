@@ -8,6 +8,9 @@ public class PlayerFinder : MonoBehaviour
     [System.NonSerialized]
     public Vector3 PlayerPos;
 
+    [SerializeField]
+    public GameObject PlayerObj;
+
 
 
     void Start()

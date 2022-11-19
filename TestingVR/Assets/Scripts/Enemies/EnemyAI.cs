@@ -86,7 +86,15 @@ public class EnemyAI : MonoBehaviour
 
     private NavMeshAgent ThisNavMesh;
 
+    [SerializeField]
+    public GameObject EnemyBullet;
+    [SerializeField]
+    public GameObject MuzzleFlashObj;
 
+    public Vector3 DirToPlayer;
+
+    [SerializeField]
+    public GameObject EnemyBulletOrigin;
 
     void Start()
     {
@@ -197,9 +205,10 @@ public class EnemyAI : MonoBehaviour
             //Checks to see if the player is still in line of sight
             if (Physics.Raycast(SightOrigin.transform.position, (PlayerObj.transform.position - ThisEnemy.gameObject.transform.position), out var hit)) // - ThisEnemy.gameObject.transform.position
             {
+                DirToPlayer = PlayerObj.transform.position - ThisEnemy.gameObject.transform.position;
                 //Debug.Log("Update ray " + hit.transform.tag);
                 //Debug.DrawRay(SightOrigin.transform.position, (PlayerObj.transform.position - ThisEnemy.gameObject.transform.position), Color.red); 
-                
+
                 if (hit.transform.tag != "Player" && PlayerInLine == true)
                 {
                     //This makes it so that if the line of sight is lost WHILE STILL PLAYERINSIGHT then it will go alert mode
@@ -220,13 +229,13 @@ public class EnemyAI : MonoBehaviour
                 else if (hit.transform.tag == "Player")
                 {
                     PlayerInLine = true;
-                    if (PlayerInSights !& PlayerInRange)
+                    /*if (PlayerInSights !& PlayerInRange)      //I think we cover this just a few lines down
                     {
                         IsAlert = true;
                         AlertTimer = AlertAmount;
                         CurrentMood = 5;
                         PlayerLastPos = PlayerObj.transform.position;
-                    }
+                    }*/
                 }
 
                 if (AlertTimer == 0)
@@ -443,6 +452,17 @@ public class EnemyAI : MonoBehaviour
             {
                 ThisNavMesh.isStopped = true;
 
+                //Turning enemy to face the player      https://www.youtube.com/watch?v=s-Ho5hF2Yww
+                float angle = Mathf.Atan2(DirToPlayer.z, DirToPlayer.x) * Mathf.Rad2Deg - 90;
+                //Debug.DrawRay(ThisEnemy.transform.position, DirToPlayer, Color.green);
+                //Debug.Log("Angle " + angle);
+
+                //Quaternion AngleAxis = Quaternion.AngleAxis(angle, Vector3.forward);
+                //ThisEnemy.transform.rotation = Quaternion.Slerp(ThisEnemy.transform.rotation, AngleAxis, Time.deltaTime * 50);
+
+                //ThisEnemy.transform.eulerAngles = Vector3.forward * angle;
+                ThisEnemy.transform.forward = DirToPlayer;      //This rotates the enemy so that he's facing the player, IF he's got a clean shot.
+                
                 if (ShootTimer <= 0)
                 {
                     AnimatorRef.SetBool("Shoot3Anim", true);
@@ -517,6 +537,18 @@ public class EnemyAI : MonoBehaviour
                 //Walk to random locations near PlayerLastPos
             }
         }
+    }
+
+
+    public void EnemyShootFunction()
+    {
+        GameObject CreatedEnemeyBullet = Instantiate(EnemyBullet, EnemyBulletOrigin.transform);
+        CreatedEnemeyBullet.GetComponent<BulletHitEnemy>().BulletOrigin = EnemyBulletOrigin;
+        //CreatedEnemeyBullet.transform.forward = this.transform.forward * 10;
+
+        GameObject CreatedEnemeyMuzzleFlash = Instantiate(MuzzleFlashObj, EnemyBulletOrigin.transform);
+        
+        //rotate z 90
     }
 
 
